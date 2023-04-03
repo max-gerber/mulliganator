@@ -1,0 +1,70 @@
+lands < 1 || manaSources < 3 || manaSources > (firstMulligan ? 5 : 7) || whiteSources == 0 || blueSources == 0
+
+    int lands = 34;
+
+    int whiteLands = 7;
+    int blueLands = 7;
+    int blackLands = 0;
+    int redLands = 0;
+    int greenLands = 0;
+    int colourlessLands = 6;
+
+    int azoriousLands = 14;
+    int orzhovLands = 0;
+    int borosLands = 0;
+    int selesnyaLands = 0;
+    int dimirLands = 0;
+    int izzetLands = 0;
+    int simicLands = 0;
+    int rakdosLands = 0;
+    int golgariLands = 0;
+    int gruulLands = 0;
+
+    int esperLands = 0;
+    int jeskaiLands = 0;
+    int bantLands = 0;
+    int marduLands = 0;
+    int abzanLands = 0;
+    int nayaLands = 0;
+    int grixisLands = 0;
+    int sultaiLands = 0;
+    int temurLands = 0;
+    int jundLands = 0;
+
+    int rainbowLands = 0;
+    
+    int whiteRamp = 1;
+    int blueRamp = 1;
+    int blackRamp = 0;
+    int redRamp = 0;
+    int greenRamp = 0;
+    int colourlessRamp = 6;
+
+    int azoriousRamp = 3;
+    int orzhovRamp = 0;
+    int borosRamp = 0;
+    int selesnyaRamp = 0;
+    int dimirRamp = 0;
+    int izzetRamp = 0;
+    int simicRamp = 0;
+    int rakdosRamp = 0;
+    int golgariRamp = 0;
+    int gruulRamp = 0;
+
+    int esperRamp = 0;
+    int jeskaiRamp = 0;
+    int bantRamp = 0;
+    int marduRamp = 0;
+    int abzanRamp = 0;
+    int nayaRamp = 0;
+    int grixisRamp = 0;
+    int sultaiRamp = 0;
+    int temurRamp = 0;
+    int jundRamp = 0;
+
+    int rainbowRamp = 0;
+
+Kept a 7 card hand 84.7823\% of the time
+Kept a 6 card hand 7.5941\% of the time
+Kept a 5 card hand 2.6937\% of the time
+Had to go down to 4 cards 4.9299\% of the time
