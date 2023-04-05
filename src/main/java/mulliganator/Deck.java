@@ -1,18 +1,31 @@
 package mulliganator;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.io.*;
+import java.util.*;
 
 public class Deck {
     int size = 99;
 
+    MulliganConditions mulliganConditions = new MulliganConditions(
+        2,
+        3,
+        5);
+
+    Map<String, Boolean> colourIdentity = new HashMap<String, Boolean>() {{
+        put("White", false);
+        put("Blue", true);
+        put("Black", true);
+        put("Red", false);
+        put("Green", false);
+    }};
+
+    ArrayList<Card> library = new ArrayList<Card>();
+
     Map<String, Integer> lands = new HashMap<String, Integer>() {{
-        put("c", 5);
+        put("c", 6);
 
         put("w", 0);
-        put("u", 10);
+        put("u", 11);
         put("b", 9);
         put("r", 0);
         put("g", 0);
@@ -21,7 +34,7 @@ public class Deck {
         put("wb", 0);
         put("wr", 0);
         put("wg", 0);
-        put("ub", 11);
+        put("ub", 9);
         put("ur", 0);
         put("ug", 0);
         put("br", 0);
@@ -76,23 +89,38 @@ public class Deck {
         put("wubrg", 0);
     }};
 
-    ArrayList<Card> library = new ArrayList<Card>();
-
     public Deck(File decklist) {
+        try {
+            Map<String, Integer> cards = new HashMap<String, Integer>();
+            Scanner deckScanner = new Scanner(decklist);
+            while (deckScanner.hasNextLine()) {
+                String[] cardData = deckScanner.nextLine().split(" ", 2);
+                cards.put(cardData[1], Integer.parseInt(cardData[0]));
+            }
+            deckScanner.close();
+            cards.keySet().forEach(cardName -> {
+                for (int i = 0; i < cards.get(cardName); i++) {
+                    library.add(ScryfallAPI.getCard(cardName));
+                }
+            });
+        } catch (Exception e) {
+            System.err.println(e);
+            return;
+        }
     }
 
     public Deck() {
-        for (Object colourIdentity : lands.keySet()) {
-            for (int i = 0; i < lands.get(colourIdentity); i++) {
-                library.add(new Land(colourIdentity.toString()));
+        lands.forEach((colour, ammount) -> {
+            for (int i = 0; i < ammount; i++) {
+                library.add(new Land(colour));
             }
-        }
-        for (Object colourIdentity : ramp.keySet()) {
-            for (int i = 0; i < ramp.get(colourIdentity); i++) {
-                library.add(new Ramp(colourIdentity.toString()));
+        });
+        ramp.forEach((colour, ammount) -> {
+            for (int i = 0; i < ammount; i++) {
+                library.add(new Ramp(colour));
             }
-        }
-        while (library.size() != 100) {
+        });
+        while (library.size() != 99) {
             library.add(new Spell());
         }
     }

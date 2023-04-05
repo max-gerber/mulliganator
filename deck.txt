@@ -1,0 +1,85 @@
+1 Academy Manufactor
+1 An Offer You Can't Refuse
+1 Arcane Signet
+1 Baleful Strix
+1 Bojuka Bog
+1 Buried Ruin
+1 Burnished Hart
+1 Choked Estuary
+1 Command Tower
+1 Commander's Sphere
+1 Counterspell
+1 Cranial Plating
+1 Cyberdrive Awakener
+1 Darksteel Citadel
+1 Darkwater Catacombs
+1 Dimir Signet
+1 Disciple of the Vault
+1 Efficient Construction
+1 Eloise, Nephalia Sleuth
+1 Emergency Weld
+1 Emry, Lurker of the Loch
+1 Etherium Sculptor
+1 Evolving Wilds
+1 Executioner's Capsule
+1 Fain, the Broker
+1 Feed the Swarm
+1 Filigree Attendant
+1 Floodhound
+1 Go for the Throat
+1 Hangarback Walker
+1 Heartless Act
+1 High Market
+1 Infernal Grasp
+10 Island
+1 Junk Diver
+1 Krark-Clan Ironworks
+1 Liquimetal Torque
+1 Marionette Master
+1 Mirrodin Besieged
+1 Mirrorworks
+1 Mistvault Bridge
+1 Myr Retriever
+1 Myriad Landscape
+1 Nadier's Nightblade
+1 Negate
+1 Nettlecyst
+1 Phyrexia's Core
+1 Phyrexian Scriptures
+1 Pile On
+1 Pitiless Plunderer
+1 Psychomancer
+1 Retrofitter Foundry
+1 Rise and Shine
+1 Sage of Lat-Nam
+1 Sai, Master Thopterist
+1 Scrap Trawler
+1 Scrapyard Recombiner
+1 Seat of the Synod
+1 Sharding Sphinx
+1 Shipwreck Marsh
+1 Skeleton Shard
+1 Sol Ring
+1 Solemn Simulacrum
+1 Steel Hellkite
+1 Stoic Rebuttal
+1 Stubborn Denial
+7 Swamp
+1 Tainted Isle
+1 Talisman of Dominance
+1 Terramorphic Expanse
+1 Tezzeret, Betrayer of Flesh
+1 Tezzeret, Master of the Bridge
+1 Their Name Is Death
+1 Thopter Spy Network
+1 Thought Monitor
+1 Thoughtcast
+1 Trading Post
+1 Treasure Vault
+1 Underground River
+1 Vat of Rebirth
+1 Vault of Whispers
+1 Venomcrawler
+1 Wayfarer's Bauble
+1 Whirler Rogue
+1 Workshop Assistant
