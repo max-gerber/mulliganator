@@ -2,6 +2,7 @@ package mulliganator;
 
 public class Ramp extends Card {
     // int manaValue;
+    // boolean entersTapped;
 
     public Ramp(String colours) {
         this.white = colours.contains("w");

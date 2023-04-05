@@ -1,7 +1,7 @@
 package mulliganator;
 
 public class Land extends Card {
-    // boolean tapped;
+    // boolean entersTapped;
     
     public Land(String colours) {
         this.white = colours.contains("w");
