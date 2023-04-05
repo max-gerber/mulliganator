@@ -3,8 +3,7 @@ package mulliganator;
 import java.io.*;
 import java.util.*;
 
-public class App 
-{
+public class App {
     public static void main( String[] args ) throws FileNotFoundException  {
 
         int numberOfMulligans = 1000000;
@@ -37,7 +36,7 @@ public class App
         Map<Integer, Integer> results = new HashMap<Integer, Integer>();
 
         for (int i = 0; i < numberOfMulligans; i++) {
-            int handSize = handSizeAfterMulliganing(deck, 7, deck.library.size() == 99);
+            int handSize = handSizeAfterMulliganing(deck, 7, deck.library.size() > 60);
             results.merge(handSize, 1, Integer::sum);
         }
 

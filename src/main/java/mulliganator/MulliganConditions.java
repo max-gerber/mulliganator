@@ -2,13 +2,8 @@ package mulliganator;
 
 public class MulliganConditions {
 
-    int minimumLands;
-    int minimumManaSources;
-    int maximumManaSources;
-
-    public MulliganConditions(int minimumLands, int minimumManaSources, int maximumManaSources){
-        this.minimumLands = minimumLands;
-        this.minimumManaSources = minimumManaSources;
-        this.maximumManaSources = maximumManaSources;
-    }
+    int minimumLands =          2;
+    int minimumManaSources =    3;
+    int maximumManaSources =    5;
+    int maximumRampManaValue =  3;
 }

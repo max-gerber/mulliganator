@@ -6,10 +6,7 @@ import java.util.*;
 public class Deck {
     int size = 99;
 
-    MulliganConditions mulliganConditions = new MulliganConditions(
-        2,
-        3,
-        5);
+    MulliganConditions mulliganConditions = new MulliganConditions();
 
     Map<String, Boolean> colourIdentity = new HashMap<String, Boolean>() {{
         put("White", false);
@@ -100,7 +97,7 @@ public class Deck {
             deckScanner.close();
             cards.keySet().forEach(cardName -> {
                 for (int i = 0; i < cards.get(cardName); i++) {
-                    library.add(ScryfallAPI.getCard(cardName));
+                    library.add(ScryfallAPI.getCard(cardName, mulliganConditions));
                 }
             });
         } catch (Exception e) {
