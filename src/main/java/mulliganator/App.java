@@ -27,7 +27,6 @@ public class App {
             "Had to go down to 4 cards " + new Double(results.get(4)) / 10000 + "\\% of the time");
     }
 
-
     private static Map<Integer, Integer> performMulligans(Deck deck, int numberOfMulligans) {
 
         // Map of how often we kept hands of various sizes
@@ -42,7 +41,6 @@ public class App {
 
         return results;
     }
-
 
     private static int handSizeAfterMulliganing(Deck deck, int handSize, boolean freeMulligan) {
 
@@ -62,7 +60,6 @@ public class App {
 
         return handSizeAfterMulliganing(deck, freeMulligan ? 7 : handSize - 1, false);
     }
-
 
     private static Map<String, Integer> manaSourcesInHand(List<Card> hand) {
         Map<String, Integer> manaSources = new HashMap<String, Integer>() {{
@@ -90,16 +87,15 @@ public class App {
         return manaSources;
     }
 
-
     private static boolean keepableHand(Map<String, Integer> manaInHand, Deck deck) {
         return !(
             manaInHand.get("Lands") < deck.mulliganConditions.minimumLands ||
             manaInHand.get("Total mana sources") < deck.mulliganConditions.minimumManaSources ||
             manaInHand.get("Total mana sources") > deck.mulliganConditions.maximumManaSources ||
-            (deck.colourIdentity.get("White") && manaInHand.get("White sources") == 0) ||
-            (deck.colourIdentity.get("Blue") && manaInHand.get("Blue sources") == 0) ||
-            (deck.colourIdentity.get("Black") && manaInHand.get("Black sources") == 0) ||
-            (deck.colourIdentity.get("Red") && manaInHand.get("Red sources") == 0) ||
-            (deck.colourIdentity.get("Green") && manaInHand.get("Green sources") == 0));
+            (deck.mulliganConditions.colourIdentity.get("White") && manaInHand.get("White sources") == 0) ||
+            (deck.mulliganConditions.colourIdentity.get("Blue") && manaInHand.get("Blue sources") == 0) ||
+            (deck.mulliganConditions.colourIdentity.get("Black") && manaInHand.get("Black sources") == 0) ||
+            (deck.mulliganConditions.colourIdentity.get("Red") && manaInHand.get("Red sources") == 0) ||
+            (deck.mulliganConditions.colourIdentity.get("Green") && manaInHand.get("Green sources") == 0));
     }
 }
