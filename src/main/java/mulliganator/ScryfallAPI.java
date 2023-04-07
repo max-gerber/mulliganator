@@ -15,13 +15,13 @@ public class ScryfallAPI {
         if (producesMana(cardInfo)) {
             String colours = getColours(cardInfo);
             
-            if (cardInfo.has("card_faces")) {
+            if (isDoubleFacedCard(cardInfo)) {
                 if (isModalDoubleFacedLand(cardInfo)) {
                     return new Land(colours);
                 }
                 cardInfo = getFrontFace(cardInfo);
             }
-            if (!isCheapEnough(cardInfo)) {
+            if (isTooExpensive(cardInfo)) {
                 return new Spell();
             }
             if (isLand(cardInfo)) {
@@ -30,7 +30,7 @@ public class ScryfallAPI {
             return new Ramp(colours);
         }
 
-        if (!isCheapEnough(cardInfo)) {
+        if (isTooExpensive(cardInfo)) {
             return new Spell();
         }
         if (tutorsLandIntoPlay(cardInfo)) {
@@ -48,64 +48,7 @@ public class ScryfallAPI {
         return new Spell();
     }
 
-    private static boolean isUntapper(JSONObject cardInfo) {
-        return ((String) cardInfo.get("oracle_text")).toLowerCase().contains("{t}: untap") && 
-        (((String) cardInfo.get("oracle_text")).toLowerCase().contains("target snow") ||
-        ((String) cardInfo.get("oracle_text")).toLowerCase().contains("target artfact") ||
-        ((String) cardInfo.get("oracle_text")).toLowerCase().contains("target gate") ||
-        ((String) cardInfo.get("oracle_text")).toLowerCase().contains("target forest") ||
-        ((String) cardInfo.get("oracle_text")).toLowerCase().contains("target land") ||
-        ((String) cardInfo.get("oracle_text")).toLowerCase().contains("target permanent")) &&
-        // We don't consider anything with a cost other than just tapping to be ramp
-        !((String) cardInfo.get("oracle_text")).toLowerCase().contains(", {t}");
-    }
-
-    private static boolean tutorsLandIntoPlay(JSONObject cardInfo) {
-        return ((String) cardInfo.get("oracle_text")).toLowerCase().contains("search your library") && 
-        (((String) cardInfo.get("oracle_text")).toLowerCase().contains("land") ||
-        ((String) cardInfo.get("oracle_text")).toLowerCase().contains("plains") ||
-        ((String) cardInfo.get("oracle_text")).toLowerCase().contains("island") ||
-        ((String) cardInfo.get("oracle_text")).toLowerCase().contains("swamp") ||
-        ((String) cardInfo.get("oracle_text")).toLowerCase().contains("mountain") ||
-        ((String) cardInfo.get("oracle_text")).toLowerCase().contains("forest")) &&
-        ((String) cardInfo.get("oracle_text")).toLowerCase().contains("onto the battlefield");
-    }
-
-    private static boolean isCheapEnough(JSONObject cardInfo) {
-        return (Double) cardInfo.get("cmc") <= 3;
-    }
-
-    private static boolean isLand(JSONObject cardInfo) {
-        return ((String) cardInfo.get("type_line")).contains("Land");
-    }
-
-    private static boolean isModalDoubleFacedLand(JSONObject cardInfo) {
-        return (cardInfo.get("layout") == "modal_dfc" && isLand(cardInfo));
-    }
-
-    private static boolean isCostReducer(JSONObject cardInfo) {
-        return (((String) cardInfo.get("oracle_text")).toLowerCase().contains("spells you cast cost") && 
-            (((String) cardInfo.get("oracle_text")).toLowerCase().contains("less to cast")));
-    }
-
-    private static JSONObject getFrontFace(JSONObject cardInfo) {
-        return ((JSONArray) cardInfo.get("card_faces")).getJSONObject(0);
-    }
-
-    private static String getColours(JSONObject cardInfo) {
-        String colours = "";
-        for (Object colour : (JSONArray) cardInfo.get("produced_mana")) {
-            colours += colour.toString().toLowerCase();
-        }
-        return colours;
-    }
-
-    private static boolean producesMana(JSONObject cardInfo) {
-        return cardInfo.has("produced_mana");
-    }
-
     private static JSONObject getCardInfo(String cardName) {
-
         String host = "https://api.scryfall.com/";
         String endpoint = "cards/named";
 
@@ -122,5 +65,65 @@ public class ScryfallAPI {
         }
 
         return new JSONObject();
+    }
+
+    private static boolean producesMana(JSONObject cardInfo) {
+        return cardInfo.has("produced_mana");
+    }
+
+    private static String getColours(JSONObject cardInfo) {
+        String colours = "";
+        for (Object colour : (JSONArray) cardInfo.get("produced_mana")) {
+            colours += colour.toString().toLowerCase();
+        }
+        return colours;
+    }
+
+    private static boolean isDoubleFacedCard(JSONObject cardInfo) {
+        return cardInfo.has("card_faces");
+    }
+
+    private static boolean isModalDoubleFacedLand(JSONObject cardInfo) {
+        return (cardInfo.get("layout") == "modal_dfc" && isLand(cardInfo));
+    }
+
+    private static JSONObject getFrontFace(JSONObject cardInfo) {
+        return ((JSONArray) cardInfo.get("card_faces")).getJSONObject(0);
+    }
+
+    private static boolean isTooExpensive(JSONObject cardInfo) {
+        return (Double) cardInfo.get("cmc") > 3;
+    }
+
+    private static boolean isLand(JSONObject cardInfo) {
+        return ((String) cardInfo.get("type_line")).contains("Land");
+    }
+
+    private static boolean tutorsLandIntoPlay(JSONObject cardInfo) {
+        return ((String) cardInfo.get("oracle_text")).toLowerCase().contains("search your library") && 
+        (((String) cardInfo.get("oracle_text")).toLowerCase().contains("land") ||
+        ((String) cardInfo.get("oracle_text")).toLowerCase().contains("plains") ||
+        ((String) cardInfo.get("oracle_text")).toLowerCase().contains("island") ||
+        ((String) cardInfo.get("oracle_text")).toLowerCase().contains("swamp") ||
+        ((String) cardInfo.get("oracle_text")).toLowerCase().contains("mountain") ||
+        ((String) cardInfo.get("oracle_text")).toLowerCase().contains("forest")) &&
+        ((String) cardInfo.get("oracle_text")).toLowerCase().contains("onto the battlefield");
+    }
+
+    private static boolean isCostReducer(JSONObject cardInfo) {
+        return (((String) cardInfo.get("oracle_text")).toLowerCase().contains("spells you cast cost") && 
+            (((String) cardInfo.get("oracle_text")).toLowerCase().contains("less to cast")));
+    }
+
+    private static boolean isUntapper(JSONObject cardInfo) {
+        return ((String) cardInfo.get("oracle_text")).toLowerCase().contains("{t}: untap") && 
+        (((String) cardInfo.get("oracle_text")).toLowerCase().contains("target snow") ||
+        ((String) cardInfo.get("oracle_text")).toLowerCase().contains("target artfact") ||
+        ((String) cardInfo.get("oracle_text")).toLowerCase().contains("target gate") ||
+        ((String) cardInfo.get("oracle_text")).toLowerCase().contains("target forest") ||
+        ((String) cardInfo.get("oracle_text")).toLowerCase().contains("target land") ||
+        ((String) cardInfo.get("oracle_text")).toLowerCase().contains("target permanent")) &&
+        // We don't consider anything with a cost other than just tapping to be ramp
+        !((String) cardInfo.get("oracle_text")).toLowerCase().contains(", {t}");
     }
 }

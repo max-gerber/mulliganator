@@ -5,7 +5,6 @@ import java.util.*;
 
 public class App {
     public static void main( String[] args ) throws FileNotFoundException  {
-
         int numberOfMulligans = 1000000;
         File deckList = new File("deck.txt");
 
