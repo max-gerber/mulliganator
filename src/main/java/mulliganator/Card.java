@@ -1,6 +1,7 @@
 package mulliganator;
 
 public abstract class Card {
+
     boolean white;
     boolean blue;
     boolean black;

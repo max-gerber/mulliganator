@@ -9,19 +9,19 @@ import com.mashape.unirest.http.exceptions.UnirestException;
 public class ScryfallAPI {
 
     // We want to determine if the card is a land, ramp spell or neither
-    public static Card getCard(String cardName) {
+    public static Card getCard(String cardName, MulliganConditions mulliganConditions) {
         JSONObject cardInfo = getCardInfo(cardName);
 
         if (producesMana(cardInfo)) {
             String colours = getColours(cardInfo);
-            
+
             if (isDoubleFacedCard(cardInfo)) {
                 if (isModalDoubleFacedLand(cardInfo)) {
                     return new Land(colours);
                 }
                 cardInfo = getFrontFace(cardInfo);
             }
-            if (isTooExpensive(cardInfo)) {
+            if (isTooExpensive(cardInfo, mulliganConditions)) {
                 return new Spell();
             }
             if (isLand(cardInfo)) {
@@ -30,7 +30,7 @@ public class ScryfallAPI {
             return new Ramp(colours);
         }
 
-        if (isTooExpensive(cardInfo)) {
+        if (isTooExpensive(cardInfo, mulliganConditions)) {
             return new Spell();
         }
         if (tutorsLandIntoPlay(cardInfo)) {
@@ -42,7 +42,7 @@ public class ScryfallAPI {
         if(isCostReducer(cardInfo)) {
             return new Ramp("c");
         }
-        if (isUntapper(cardInfo)) {
+        if (isUntapper(cardInfo, mulliganConditions)) {
             return new Ramp("wubrg");
         }
         return new Spell();
@@ -91,8 +91,8 @@ public class ScryfallAPI {
         return ((JSONArray) cardInfo.get("card_faces")).getJSONObject(0);
     }
 
-    private static boolean isTooExpensive(JSONObject cardInfo) {
-        return (Double) cardInfo.get("cmc") > 3;
+    private static boolean isTooExpensive(JSONObject cardInfo, MulliganConditions mulliganConditions) {
+        return (Double) cardInfo.get("cmc") > mulliganConditions.maximumRampManaValue;
     }
 
     private static boolean isLand(JSONObject cardInfo) {
@@ -115,14 +115,15 @@ public class ScryfallAPI {
             (((String) cardInfo.get("oracle_text")).toLowerCase().contains("less to cast")));
     }
 
-    private static boolean isUntapper(JSONObject cardInfo) {
+    private static boolean isUntapper(JSONObject cardInfo, MulliganConditions mulliganConditions) {
         return ((String) cardInfo.get("oracle_text")).toLowerCase().contains("{t}: untap") && 
         (((String) cardInfo.get("oracle_text")).toLowerCase().contains("target snow") ||
-        ((String) cardInfo.get("oracle_text")).toLowerCase().contains("target artfact") ||
+        ((String) cardInfo.get("oracle_text")).toLowerCase().contains("target artifact") ||
         ((String) cardInfo.get("oracle_text")).toLowerCase().contains("target gate") ||
         ((String) cardInfo.get("oracle_text")).toLowerCase().contains("target forest") ||
         ((String) cardInfo.get("oracle_text")).toLowerCase().contains("target land") ||
-        ((String) cardInfo.get("oracle_text")).toLowerCase().contains("target permanent")) &&
+        ((String) cardInfo.get("oracle_text")).toLowerCase().contains("target permanent") ||
+        (mulliganConditions.untapCreatureRamp ? ((String) cardInfo.get("oracle_text")).toLowerCase().contains("target creature") : false)) &&
         // We don't consider anything with a cost other than just tapping to be ramp
         !((String) cardInfo.get("oracle_text")).toLowerCase().contains(", {t}");
     }

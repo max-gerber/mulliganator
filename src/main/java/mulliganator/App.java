@@ -4,17 +4,18 @@ import java.io.*;
 import java.util.*;
 
 public class App {
+
     public static void main( String[] args ) throws FileNotFoundException  {
         int numberOfMulligans = 1000000;
         File deckList = new File("deck.txt");
 
         System.out.println("Getting Card Info From Scryfall.com...");
         Deck deck = new Deck(deckList);
+
         if (deck.library.size() == 0) {
             System.err.println("!!!Something went wrong importing the deck!!!");
             return;
         }
-        // Deck deck = new Deck();
 
         System.out.println("Performing " + numberOfMulligans + " Mulligans...");
         Map<Integer, Integer> results = performMulligans(deck, numberOfMulligans);
